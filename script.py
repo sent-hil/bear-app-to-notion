@@ -24,6 +24,7 @@ for fname in tqdm(glob.glob("{root_dir}/**/*.md", recursive=True)):
         newPage = page.children.add_new(PageBlock, title=page_title)
 
         def convertImagePath(imagePath, mdFilePath):
-            ret = Path(mdFilePath).parent / Path(mdFilePath).stem / Path(imagePath).name
+            decodedImagePath = urllib.parse.unquote(imagePath)
+            ret = Path(mdFilePath).parent / Path(decodedImagePath)
             return ret
         upload(mdFile, newPage, imagePathFunc=convertImagePath)
